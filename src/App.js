@@ -14,7 +14,7 @@ function App() {
 
     const noteDetails = {
       title: "Example note",
-      date: datetime,
+      date: datetime
     }
 
     setNotes([...notes, noteDetails]);
