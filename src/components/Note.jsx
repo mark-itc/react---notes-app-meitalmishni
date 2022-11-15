@@ -1,7 +1,6 @@
 import '../styles/Note.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CloseButton from 'react-bootstrap/CloseButton';
-import { useState } from 'react';
 
 function Note(props) {
     const { id, title, date, onDeleteNoteHandler } = props;

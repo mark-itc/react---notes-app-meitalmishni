@@ -1,3 +1,4 @@
+import logo from './logo.svg';
 import './App.css';
 import Form from './components/Form';
 import Note from './components/Note';
@@ -42,25 +43,26 @@ function App() {
 
     const noteDetails = {
       title: "Example note",
-      date: month + " " + day + " " + hour,
+      date: `${month} ${day} ${hour}`,
     }
 
     setNotes([...notes, noteDetails]);
   }
 
-  const onDeleteNote = (noteId) => {
-    const deleteConfirmation = window.confirm("Are you sure you want to delete your note?");
+  const showNotes = () => {
 
-    if (deleteConfirmation !== true) {
-      return false;
+    const onDeleteNote = (noteId) => {
+      const deleteConfirmation = window.confirm("Are you sure you want to delete your note?");
+
+      if (deleteConfirmation !== true) {
+        return false;
+      }
+
+      const notesList = [...notes];
+      notesList.splice(noteId, 1);
+      setNotes(notesList);
     }
 
-    const notesList = [...notes];
-    notesList.splice(noteId, 1);
-    setNotes(notesList);
-  }
-
-  const showNotes = () => {
     return notes.map(
       (note, index) => {
         return (
