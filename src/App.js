@@ -3,6 +3,23 @@ import Form from './components/Form';
 import Note from './components/Note';
 import { useState } from 'react';
 
+
+function ordinal_suffix_of(day) {
+  var digit = day % 10;
+
+  if (digit == 1) {
+    return day + "st";
+  }
+  if (digit == 2) {
+    return day + "nd";
+  }
+  if (digit == 3) {
+    return day + "rd";
+  }
+  return day + "th";
+}
+
+
 function App() {
 
   const [notes, setNotes] = useState([]);
@@ -10,14 +27,37 @@ function App() {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const datetime = new Date().toUTCString();
+    const now = new Date();
+
+    const month = now.toLocaleDateString('en-us', {
+      month: "long",
+    });
+
+    const day = ordinal_suffix_of(now.getDate());
+
+    const hour = now.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
 
     const noteDetails = {
       title: "Example note",
-      date: datetime
+      date: month + " " + day + " " + hour,
     }
 
     setNotes([...notes, noteDetails]);
+  }
+
+  const onDeleteNote = (noteId) => {
+    const deleteConfirmation = window.confirm("Are you sure you want to delete your note?");
+
+    if (deleteConfirmation !== true) {
+      return false;
+    }
+
+    const notesList = [...notes];
+    notesList.splice(noteId, 1);
+    setNotes(notesList);
   }
 
   const showNotes = () => {
@@ -26,8 +66,10 @@ function App() {
         return (
           <Note
             key={index}
+            id={index}
             title={note.title}
-            date={note.date} />
+            date={note.date}
+            onDeleteNoteHandler={onDeleteNote} />
         );
       }
     );
