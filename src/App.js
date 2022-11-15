@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Form from './components/Form';
 import Note from './components/Note';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 function ordinal_suffix_of(day) {
@@ -26,6 +26,10 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [counter, setCounter] = useState(1);
 
+  useEffect(() => {
+    setCounter(notes.length);
+  }, [notes])
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -43,12 +47,9 @@ function App() {
     });
 
     const noteDetails = {
-      title: `Note ${counter}`,
+      title: `Note ${counter + 1}`,
       date: `${month} ${day} ${hour}`,
     }
-
-    const newCounter = counter + 1;
-    setCounter(newCounter);
 
     setNotes([...notes, noteDetails]);
   }
@@ -61,9 +62,6 @@ function App() {
       if (deleteConfirmation !== true) {
         return false;
       }
-
-      const newCounter = counter - 1;
-      setCounter(newCounter);
 
       const notesList = [...notes];
       notesList.splice(noteId, 1);
