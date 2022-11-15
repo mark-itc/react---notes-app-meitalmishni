@@ -21,7 +21,7 @@ function Note(props) {
     return (
         <>
             <div className="note" onClick={() => handleShow()}>
-                <CloseButton className="delete-note" onClick={handleClick} />
+                <CloseButton onClick={handleClick} />
                 <h2 className="note-title">{title}</h2>
                 <p className="note-text">Created at: {date}</p>
             </div>
